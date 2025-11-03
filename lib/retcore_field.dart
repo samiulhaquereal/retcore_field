@@ -1,5 +1,9 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+// lib/retcore_field.dart
+
+library retcore_field;
+
+// Export the main widget
+export 'src/core/widget/custom_field_base.dart';
+
+// Export the theme class
+export 'src/core/theme/retcore_field_theme.dart';
