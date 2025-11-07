@@ -1,6 +1,6 @@
 name: retcore_field
 description: "A highly customizable and feature-rich TextField widget for Flutter with built-in support for password fields, date pickers, validation, and theming."
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/samiulhaquereal/retcore_field
 repository: https://github.com/samiulhaquereal/retcore_field
 

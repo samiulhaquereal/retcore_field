@@ -1,7 +1,3 @@
-// lib/retcore_field.dart
-
-library retcore_field;
-
 // Export the main widget
 export 'src/core/widget/custom_field_base.dart';
 

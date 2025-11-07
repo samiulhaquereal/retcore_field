@@ -139,6 +139,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  retcore_field:
+    dependency: "direct main"
+    description:
+      name: retcore_field
+      sha256: "3a1a638ccd6146605a5f92b9ce850444db6ff02d60d87345e96487af090d81f9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter

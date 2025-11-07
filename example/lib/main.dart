@@ -1,4 +1,3 @@
-/*
 import 'package:flutter/material.dart';
 import 'package:retcore_field/retcore_field.dart';
 
@@ -104,4 +103,3 @@ class _RegistrationFormState extends State<RegistrationForm> {
     );
   }
 }
-*/
