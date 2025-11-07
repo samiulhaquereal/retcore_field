@@ -58,7 +58,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 keyboardType: TextInputType.emailAddress,
                 isRequired: true,
                 theme: RetCoreFieldTheme.defaultTheme(),
-                validator: (value) => (value?.isEmpty ?? true) ? 'Email is required' : null,
+                validator:
+                    (value) =>
+                        (value?.isEmpty ?? true) ? 'Email is required' : null,
               ),
               SizedBox(height: 20),
 
@@ -70,7 +72,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 prefixIcon: Icons.lock_outline,
                 isRequired: true,
                 theme: RetCoreFieldTheme.defaultTheme(),
-                validator: (value) => (value?.length ?? 0) < 6 ? 'Password must be at least 6 characters' : null,
+                validator:
+                    (value) =>
+                        (value?.length ?? 0) < 6
+                            ? 'Password must be at least 6 characters'
+                            : null,
               ),
               SizedBox(height: 20),
 
