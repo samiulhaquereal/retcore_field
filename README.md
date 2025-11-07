@@ -108,6 +108,200 @@ RetCoreField uses three main components for theming:
 | `theme` | `RetCoreFieldTheme` | Visual theme (required) | - |
 
 
+#### Quick Start
+<p>Import the package and use the RetCoreField widget with its default theme.</p>
+
+```
+import 'package:flutter/material.dart';
+import 'package:retcore_field/retcore_field.dart';
+
+class MyForm extends StatelessWidget {
+  final _emailController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return RetCoreField(
+      controller: _emailController,
+      labelText: 'Email',
+      hintText: 'Enter your email',
+      prefixIcon: Icons.email_outlined,
+      theme: RetCoreFieldTheme.defaultTheme(),
+    );
+  }
+}
+
+```
+<p>Examples</p>
+
+#### 1. Email Field with Validation
+
+```
+RetCoreField(
+  controller: _emailController,
+  labelText: 'Email',
+  hintText: 'your.email@example.com',
+  prefixIcon: Icons.email_outlined,
+  keyboardType: TextInputType.emailAddress,
+  isRequired: true, // Enables validation and shows '*'
+  theme: RetCoreFieldTheme.defaultTheme(),
+  validator: (value) {
+    if (value == null || !value.contains('@')) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  },
+)
+
+```
+
+#### 2. Password Field with Visibility Toggle
+
+```
+RetCoreField(
+  controller: _passwordController,
+  isPassword: true, // Enables password mode
+  labelText: 'Password',
+  hintText: 'Enter your password',
+  prefixIcon: Icons.lock_outline,
+  isRequired: true,
+  theme: RetCoreFieldTheme.defaultTheme(),
+  validator: (value) {
+    if (value == null || value.length &amp;amp;amp;amp;lt; 6) {
+      return 'Password must be at least 6 characters';
+    }
+    return null;
+  },
+)
+
+```
+
+#### 3. Date Picker Field
+
+```
+RetCoreField(
+  controller: _dobController,
+  isDatePicker: true, // Enables date picker
+  labelText: 'Date of Birth',
+  hintText: 'Select your birth date',
+  readOnly: true, // Important: Prevents keyboard from appearing
+  prefixIcon: Icons.calendar_month_outlined,
+  theme: RetCoreFieldTheme.defaultTheme(),
+  initialDate: DateTime(2000, 1, 1),
+  startingDate: DateTime(1950),
+  endingDate: DateTime.now(),
+)
+
+```
+
+#### 4. Multi-line Text Area
+
+```
+RetCoreField(
+  controller: _bioController,
+  labelText: 'Bio',
+  hintText: 'Tell us about yourself',
+  maxLines: 5,
+  maxLength: 500,
+  theme: RetCoreFieldTheme.defaultTheme(),
+)
+
+```
+
+
+
+### Complete Form Example
+
+```
+import 'package:flutter/material.dart';
+import 'package:retcore_field/retcore_field.dart';
+
+class RegistrationForm extends StatefulWidget {
+  @override
+  _RegistrationFormState createState() =&amp;amp;gt; _RegistrationFormState();
+}
+
+class _RegistrationFormState extends State&amp;lt;registrationform&amp;gt; {
+  final _formKey = GlobalKey&amp;lt;formstate&amp;gt;();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _dobController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _dobController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Registration')),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            children: [
+              // Email Field
+              RetCoreField(
+                controller: _emailController,
+                labelText: 'Email',
+                prefixIcon: Icons.email_outlined,
+                keyboardType: TextInputType.emailAddress,
+                isRequired: true,
+                theme: RetCoreFieldTheme.defaultTheme(),
+                validator: (value) =&amp;amp;gt; (value?.isEmpty ?? true) ? 'Email is required' : null,
+              ),
+              SizedBox(height: 20),
+
+              // Password Field
+              RetCoreField(
+                controller: _passwordController,
+                isPassword: true,
+                labelText: 'Password',
+                prefixIcon: Icons.lock_outline,
+                isRequired: true,
+                theme: RetCoreFieldTheme.defaultTheme(),
+                validator: (value) =&amp;amp;gt; (value?.length ?? 0) &amp;amp;lt; 6 ? 'Password must be at least 6 characters' : null,
+              ),
+              SizedBox(height: 20),
+
+              // Date of Birth
+              RetCoreField(
+                controller: _dobController,
+                isDatePicker: true,
+                labelText: 'Date of Birth',
+                readOnly: true,
+                prefixIcon: Icons.calendar_month_outlined,
+                theme: RetCoreFieldTheme.defaultTheme(),
+              ),
+              SizedBox(height: 30),
+
+              // Submit Button
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Processing Data...')),
+                    );
+                  }
+                },
+                child: Text('Register'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+&amp;lt;/formstate&amp;gt;&amp;lt;/registrationform&amp;gt;
+
+```
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
