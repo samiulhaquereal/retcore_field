@@ -1,7 +1,8 @@
 name: retcore_field
 description: "A new Flutter project."
 version: 0.0.1
-homepage:
+homepage: https://github.com/samiulhaquereal/retcore_field
+repository: https://github.com/samiulhaquereal/retcore_field
 
 environment:
   sdk: ^3.7.2

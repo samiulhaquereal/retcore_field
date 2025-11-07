@@ -1,97 +1,205 @@
 import 'package:retcore_field/src/config/import.dart';
 
-/// RetCoreTextField is a highly customizable and reusable text input widget.
+
+/// RetCoreField is a highly customizable and reusable text input widget.
 ///
 /// It builds upon Flutter's `TextFormField` and provides a clean, theme-based
-/// approach to styling. It includes built-in support for password fields,
-/// date pickers, and conditional validation, making it a versatile component
-/// for any form.
-class RetCoreTextField extends StatefulWidget {
+/// approach to styling. ALL visual styling is controlled through the [theme]
+/// parameter, ensuring consistent design across your app.
+///
+/// It includes built-in support for password fields, date pickers, and
+/// conditional validation, making it a versatile component for any form.
+class RetCoreField extends StatefulWidget {
   // --- Core Properties ---
   /// Controls the text being edited.
   final TextEditingController? controller;
+
+  /// The initial value to display. Cannot be used with `controller`.
+  final String? initialValue;
+
   /// An optional focus node to manage the field's focus state.
   final FocusNode? focusNode;
 
-  // --- Text and Labels ---
-  /// The text that appears in the floating label when the field is focused or contains text.
+  // --- Text Content ---
+  /// The text that appears in the floating label.
   final String? labelText;
+
   /// Hint text to display when the field is empty.
   final String? hintText;
 
   // --- Behavior Flags ---
   /// If `true`, configures the field for password entry with a visibility toggle.
   final bool isPassword;
+
   /// If `true`, configures the field as a date picker, showing a calendar icon.
   final bool isDatePicker;
+
   /// If `true`, marks the field as required and enables validation.
   final bool isRequired;
 
   // --- Input Configuration ---
   /// The type of keyboard to display for text input.
   final TextInputType? keyboardType;
-  /// If `false`, the user cannot interact with the text field.
-  final bool enabled;
-  /// If `true`, the user cannot modify the text field's content.
+
+  /// The type of action button on the keyboard.
+  final TextInputAction? textInputAction;
+
+  /// Configures how to capitalize text.
+  final TextCapitalization textCapitalization;
+
+  /// How the text should be aligned horizontally.
+  final TextAlign textAlign;
+
+  /// Whether this text field should focus itself automatically.
+  final bool autofocus;
+
+  /// If `false`, the user cannot modify the text field's content.
   final bool readOnly;
-  /// The maximum number of characters allowed in the text field.
+
+  /// If `false`, the user cannot interact with the text field.
+  final bool? enabled;
+
+  /// The maximum number of characters allowed.
   final int? maxLength;
-  /// The maximum number of lines the field can expand to. Defaults to 1.
-  final int maxLines;
+
+  /// Determines how the `maxLength` limit should be enforced.
+  final MaxLengthEnforcement? maxLengthEnforcement;
+
+  /// The maximum number of lines the field can expand to.
+  final int? maxLines;
+
+  /// The minimum number of lines to occupy.
+  final int? minLines;
+
+  /// Whether to enable autocorrect.
+  final bool autocorrect;
+
+  /// Whether to show suggestions to the user.
+  final bool enableSuggestions;
 
   // --- Validation and Callbacks ---
-  /// A function that validates the input. Returns an error string or `null` if valid.
-  /// This is only active when [isRequired] is `true`.
-  final String? Function(String?)? validator;
-  /// A callback that fires whenever the text content changes.
-  final void Function(String)? onChanged;
+  /// A function that validates the input. Only active when [isRequired] is `true`.
+  final FormFieldValidator<String>? validator;
 
-  // --- Theming and Icons ---
-  /// The visual theme for styling the text field, including colors, borders, and text styles.
+  /// A callback that fires when the form is saved.
+  final FormFieldSetter<String>? onSaved;
+
+  /// Used to enable and configure auto-validation.
+  final AutovalidateMode? autovalidateMode;
+
+  /// A callback that fires whenever the text content changes.
+  final ValueChanged<String>? onChanged;
+
+  /// Called when the user taps on this text field.
+  final GestureTapCallback? onTap;
+
+  /// Called when a tap is detected outside of the text field.
+  final TapRegionCallback? onTapOutside;
+
+  /// Called when the user signals that they are done editing.
+  final VoidCallback? onEditingComplete;
+
+  /// Called when the user submits the field.
+  final ValueChanged<String>? onFieldSubmitted;
+
+  // --- Input Formatters ---
+  /// Optional list of input formatters to restrict or format input.
+  final List<TextInputFormatter>? inputFormatters;
+
+  // --- Theming (REQUIRED) ---
+  /// The visual theme for styling the text field.
+  /// This controls ALL visual aspects: colors, sizes, borders, icons, etc.
   final RetCoreFieldTheme theme;
+
+  // --- Icons (Logical, not styled) ---
   /// An icon to display before the input text.
   final IconData? prefixIcon;
-  /// An icon to display after the input text. Not used if `isPassword` or `isDatePicker` is `true`.
+
+  /// An icon to display after the input text.
+  /// Not used if `isPassword` or `isDatePicker` is `true`.
   final IconData? suffixIcon;
 
   // --- Date Picker Configuration ---
   /// The initially selected date for the date picker.
   final DateTime? initialDate;
+
   /// The earliest date that can be selected in the date picker.
   final DateTime? startingDate;
+
   /// The latest date that can be selected in the date picker.
   final DateTime? endingDate;
 
-  /// Creates a new instance of RetCoreTextField.
-  const RetCoreTextField({
+  // --- Advanced TextFormField Properties ---
+  final ScrollController? scrollController;
+  final ScrollPhysics? scrollPhysics;
+  final EdgeInsets scrollPadding;
+  final Iterable<String>? autofillHints;
+  final String? restorationId;
+  final bool enableIMEPersonalizedLearning;
+
+  /// Creates a new instance of RetCoreField.
+  const RetCoreField({
     super.key,
-    this.controller,
-    this.focusNode,
+    // --- REQUIRED: Theme ---
+    required this.theme,
+
+    // --- Custom Properties ---
     this.labelText,
     this.hintText,
     this.isPassword = false,
     this.isDatePicker = false,
     this.isRequired = false,
-    this.keyboardType,
-    this.enabled = true,
-    this.readOnly = false,
-    this.maxLength,
-    this.maxLines = 1,
-    this.validator,
-    this.onChanged,
-    required this.theme,
     this.prefixIcon,
     this.suffixIcon,
     this.initialDate,
     this.startingDate,
     this.endingDate,
-  });
+
+    // --- Core TextFormField ---
+    this.controller,
+    this.initialValue,
+    this.focusNode,
+    this.keyboardType,
+    this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
+    this.textAlign = TextAlign.start,
+    this.readOnly = false,
+    this.autofocus = false,
+    this.autocorrect = false,
+    this.enableSuggestions = false,
+    this.maxLines = 1,
+    this.minLines,
+    this.maxLength,
+    this.maxLengthEnforcement,
+    this.enabled,
+
+    // --- Callbacks ---
+    this.onChanged,
+    this.onTap,
+    this.onTapOutside,
+    this.onEditingComplete,
+    this.onFieldSubmitted,
+    this.onSaved,
+    this.validator,
+
+    // --- Other ---
+    this.inputFormatters,
+    this.autovalidateMode,
+    this.scrollController,
+    this.scrollPhysics,
+    this.scrollPadding = const EdgeInsets.all(20.0),
+    this.autofillHints,
+    this.restorationId,
+    this.enableIMEPersonalizedLearning = true,
+  }) : assert(initialValue == null || controller == null,
+  'Cannot provide both an initialValue and a controller.'),
+        assert(maxLines == null || maxLines > 0);
 
   @override
-  State<RetCoreTextField> createState() => _RetCoreTextFieldState();
+  State<RetCoreField> createState() => _RetCoreFieldState();
 }
 
-class _RetCoreTextFieldState extends State<RetCoreTextField> {
+class _RetCoreFieldState extends State<RetCoreField> {
   // Internal state to manage password visibility.
   late bool _obscureText;
 
@@ -104,121 +212,159 @@ class _RetCoreTextFieldState extends State<RetCoreTextField> {
 
   @override
   Widget build(BuildContext context) {
-    // TextFormField is used to get validation and form integration capabilities.
     return TextFormField(
       // --- Core Configuration ---
       controller: widget.controller,
+      initialValue: widget.initialValue,
       focusNode: widget.focusNode,
       keyboardType: widget.keyboardType,
-      style: widget.theme.inputTextStyle,
+      textInputAction: widget.textInputAction,
+      textCapitalization: widget.textCapitalization,
+      textAlign: widget.textAlign,
+      autofocus: widget.autofocus,
+      scrollController: widget.scrollController,
+      scrollPhysics: widget.scrollPhysics,
 
       // --- Behavior Configuration ---
-      obscureText: _obscureText, // Controls password visibility.
-      enabled: widget.enabled,
-      readOnly: widget.readOnly || widget.isDatePicker, // Date pickers are often read-only.
+      obscureText: _obscureText,
+      readOnly: widget.readOnly || widget.isDatePicker,
+      autocorrect: widget.autocorrect,
+      enableSuggestions: widget.enableSuggestions,
       maxLength: widget.maxLength,
-      maxLines: widget.maxLines,
-      autocorrect: false, // Disable autocorrect for fields like emails or codes.
-      enableSuggestions: false, // Disable suggestions for cleaner input.
+      maxLengthEnforcement: widget.maxLengthEnforcement,
+      maxLines: widget.isPassword ? 1 : widget.maxLines,
+      minLines: widget.minLines,
+      enabled: widget.enabled,
+
+      // --- Styling (from theme) ---
+      style: widget.theme.inputTextStyle,
+      cursorColor: widget.theme.cursorColor,
+      cursorWidth: widget.theme.cursorWidth,
+      cursorHeight: widget.theme.cursorHeight,
+      cursorRadius: widget.theme.cursorRadius,
 
       // --- Callbacks and Validation ---
       onChanged: widget.onChanged,
-      validator: widget.isRequired ? widget.validator : null, // Apply validator only if required.
-      onTapOutside: (event) => FocusScope.of(context).unfocus(), // Dismiss keyboard on outside tap.
+      onTap: widget.onTap,
+      onTapOutside: widget.onTapOutside ?? (event) => FocusScope.of(context).unfocus(),
+      onEditingComplete: widget.onEditingComplete,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      onSaved: widget.onSaved,
+      validator: widget.isRequired ? widget.validator : null,
+      inputFormatters: widget.inputFormatters,
+      autovalidateMode: widget.autovalidateMode,
 
-      // --- Decoration and Styling ---
+      // --- Other Properties ---
+      scrollPadding: widget.scrollPadding,
+      autofillHints: widget.autofillHints,
+      restorationId: widget.restorationId,
+      enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
+
+      // --- Decoration (ALL styling from theme) ---
       decoration: InputDecoration(
-        // Use a dense layout to reduce vertical space, common in forms.
-        isDense: true,
-        // Set the padding within the text field's bounds.
+        isDense: widget.theme.isDense,
         contentPadding: widget.theme.contentPadding,
-        // The main label, which shows an asterisk if the field is required.
+        filled: widget.theme.filled,
+        fillColor: widget.theme.fillColor,
+
+        // Label with asterisk if required
         label: _buildLabel(),
-        // Placeholder text shown when the field is empty.
+        labelStyle: widget.theme.labelTextStyle,
+
+        // Hint text
         hintText: widget.hintText,
         hintStyle: widget.theme.hintTextStyle,
-        // Error text styling.
+
+        // Error styling
         errorStyle: widget.theme.errorTextStyle,
-        // Icon shown at the beginning of the field.
+        errorMaxLines: widget.theme.errorMaxLines,
+
+        // Icons
         prefixIcon: _buildPrefixIcon(),
-        // Icon shown at the end, handling password and date picker icons.
         suffixIcon: _buildSuffixIcon(),
-        // Define the appearance of the field's border in different states.
-        enabledBorder: _buildBorder(widget.theme.borderColor ?? Colors.grey),
-        focusedBorder: _buildBorder(widget.theme.focusedBorderColor ?? Theme.of(context).primaryColor),
-        errorBorder: _buildBorder(widget.theme.errorBorderColor ?? Colors.red),
-        focusedErrorBorder: _buildBorder(widget.theme.errorBorderColor ?? Colors.red),
+
+        // Borders
+        enabledBorder: widget.theme.enabledBorder,
+        focusedBorder: widget.theme.focusedBorder,
+        errorBorder: widget.theme.errorBorder,
+        focusedErrorBorder: widget.theme.focusedErrorBorder,
+        disabledBorder: widget.theme.disabledBorder,
+        border: widget.theme.border,
       ),
     );
   }
 
-  /// Builds the label as a `RichText` widget to conditionally add a red asterisk.
+  /// Builds the label with a red asterisk if required.
   Widget? _buildLabel() {
     if (widget.labelText == null) return null;
 
-    // Use RichText to combine the label with a styled asterisk.
     return RichText(
       text: TextSpan(
         text: widget.labelText,
-        // Use the theme's label style or fall back to the app's default.
-        style: widget.theme.labelTextStyle ?? Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.grey.shade700),
+        style: widget.theme.labelTextStyle ?? Theme.of(context).textTheme.bodyLarge,
         children: <TextSpan>[
-          // Add a red asterisk if the field is marked as required.
           if (widget.isRequired)
             TextSpan(
               text: ' *',
-              style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.bold),
+              style: widget.theme.requiredAsteriskStyle ??
+                  TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.bold),
             ),
         ],
       ),
     );
   }
 
-  /// Builds the prefix icon widget.
+  /// Builds the prefix icon with theme styling.
   Widget? _buildPrefixIcon() {
-    // Only build the icon if one has been provided.
     return widget.prefixIcon != null
-        ? Icon(widget.prefixIcon, color: widget.theme.iconColor, size: widget.theme.iconSize)
+        ? Icon(
+      widget.prefixIcon,
+      color: widget.theme.prefixIconColor,
+      size: widget.theme.prefixIconSize,
+    )
         : null;
   }
 
   /// Builds the suffix icon, prioritizing password and date picker icons.
   Widget? _buildSuffixIcon() {
-    // If it's a password field, show the visibility toggle icon.
+    // Password toggle icon
     if (widget.isPassword) {
       return IconButton(
         icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
-        color: widget.theme.iconColor,
+        color: widget.theme.suffixIconColor,
+        iconSize: widget.theme.suffixIconSize,
         onPressed: () => setState(() => _obscureText = !_obscureText),
       );
     }
-    // If it's a date picker, show the calendar icon.
+
+    // Date picker icon
     if (widget.isDatePicker) {
       return IconButton(
-        icon: Icon(widget.suffixIcon ?? Icons.calendar_today, color: widget.theme.iconColor, size: widget.theme.iconSize),
+        icon: Icon(
+          widget.suffixIcon ?? Icons.calendar_today,
+          color: widget.theme.suffixIconColor,
+          size: widget.theme.suffixIconSize,
+        ),
         onPressed: _pickDate,
       );
     }
-    // Otherwise, show the generic suffix icon if provided.
+
+    // Generic suffix icon
     if (widget.suffixIcon != null) {
-      return Icon(widget.suffixIcon, color: widget.theme.iconColor, size: widget.theme.iconSize);
+      return Icon(
+        widget.suffixIcon,
+        color: widget.theme.suffixIconColor,
+        size: widget.theme.suffixIconSize,
+      );
     }
-    // Return null if no suffix icon is needed.
+
     return null;
   }
 
-  /// Helper method to create a consistent `OutlineInputBorder` with a given color.
-  OutlineInputBorder _buildBorder(Color color) {
-    return OutlineInputBorder(
-      // Use the border radius from the theme or a default value.
-      borderRadius: BorderRadius.circular(widget.theme.borderRadius ?? 8.0),
-      // Set the border color.
-      borderSide: BorderSide(color: color),
-    );
-  }
-
-  /// Displays the date picker dialog and updates the controller with the selected date.
+  /// Displays the date picker dialog and updates the controller.
   Future<void> _pickDate() async {
+    FocusScope.of(context).requestFocus(FocusNode());
+
     final pickedDate = await showDatePicker(
       context: context,
       initialDate: widget.initialDate ?? DateTime.now(),
@@ -226,13 +372,9 @@ class _RetCoreTextFieldState extends State<RetCoreTextField> {
       lastDate: widget.endingDate ?? DateTime(2100),
     );
 
-    // If a date was selected, format it and update the text field.
     if (pickedDate != null) {
-      // Format the date to YYYY-MM-DD for consistency.
       final formattedDate = "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
-      // Update the controller's text, which rebuilds the UI.
       widget.controller?.text = formattedDate;
-      // Also fire the onChanged callback for external listeners.
       widget.onChanged?.call(formattedDate);
     }
   }
