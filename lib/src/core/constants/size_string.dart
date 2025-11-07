@@ -53,7 +53,10 @@ abstract class RetCoreFieldSizes {
 
   // --- Layout & Spacing ---
   /// Padding inside the text field.
-  static const EdgeInsets contentPadding = EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0);
+  static const EdgeInsets contentPadding = EdgeInsets.symmetric(
+    vertical: 16.0,
+    horizontal: 12.0,
+  );
 
   /// Maximum number of lines for error text.
   static const int errorMaxLines = 2;

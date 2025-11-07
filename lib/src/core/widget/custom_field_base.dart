@@ -1,6 +1,5 @@
 import 'package:retcore_field/src/config/import.dart';
 
-
 /// RetCoreField is a highly customizable and reusable text input widget.
 ///
 /// It builds upon Flutter's `TextFormField` and provides a clean, theme-based
@@ -191,9 +190,11 @@ class RetCoreField extends StatefulWidget {
     this.autofillHints,
     this.restorationId,
     this.enableIMEPersonalizedLearning = true,
-  }) : assert(initialValue == null || controller == null,
-  'Cannot provide both an initialValue and a controller.'),
-        assert(maxLines == null || maxLines > 0);
+  }) : assert(
+         initialValue == null || controller == null,
+         'Cannot provide both an initialValue and a controller.',
+       ),
+       assert(maxLines == null || maxLines > 0);
 
   @override
   State<RetCoreField> createState() => _RetCoreFieldState();
@@ -246,7 +247,8 @@ class _RetCoreFieldState extends State<RetCoreField> {
       // --- Callbacks and Validation ---
       onChanged: widget.onChanged,
       onTap: widget.onTap,
-      onTapOutside: widget.onTapOutside ?? (event) => FocusScope.of(context).unfocus(),
+      onTapOutside:
+          widget.onTapOutside ?? (event) => FocusScope.of(context).unfocus(),
       onEditingComplete: widget.onEditingComplete,
       onFieldSubmitted: widget.onFieldSubmitted,
       onSaved: widget.onSaved,
@@ -301,13 +303,19 @@ class _RetCoreFieldState extends State<RetCoreField> {
     return RichText(
       text: TextSpan(
         text: widget.labelText,
-        style: widget.theme.labelTextStyle ?? Theme.of(context).textTheme.bodyLarge,
+        style:
+            widget.theme.labelTextStyle ??
+            Theme.of(context).textTheme.bodyLarge,
         children: <TextSpan>[
           if (widget.isRequired)
             TextSpan(
               text: ' *',
-              style: widget.theme.requiredAsteriskStyle ??
-                  TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.bold),
+              style:
+                  widget.theme.requiredAsteriskStyle ??
+                  TextStyle(
+                    color: Colors.red.shade700,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
         ],
       ),
@@ -318,10 +326,10 @@ class _RetCoreFieldState extends State<RetCoreField> {
   Widget? _buildPrefixIcon() {
     return widget.prefixIcon != null
         ? Icon(
-      widget.prefixIcon,
-      color: widget.theme.prefixIconColor,
-      size: widget.theme.prefixIconSize,
-    )
+          widget.prefixIcon,
+          color: widget.theme.prefixIconColor,
+          size: widget.theme.prefixIconSize,
+        )
         : null;
   }
 
@@ -373,7 +381,8 @@ class _RetCoreFieldState extends State<RetCoreField> {
     );
 
     if (pickedDate != null) {
-      final formattedDate = "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+      final formattedDate =
+          "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
       widget.controller?.text = formattedDate;
       widget.onChanged?.call(formattedDate);
     }

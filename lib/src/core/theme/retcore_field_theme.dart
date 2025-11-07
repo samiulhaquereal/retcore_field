@@ -1,6 +1,5 @@
 import 'package:retcore_field/src/config/import.dart';
 
-
 /// RetCoreFieldTheme defines the visual styling for RetCoreField.
 ///
 /// This theme uses static colors and sizes from RetCoreFieldColors and RetCoreFieldSizes.
@@ -116,7 +115,8 @@ class RetCoreFieldTheme {
       hintTextStyle: hintTextStyle ?? this.hintTextStyle,
       labelTextStyle: labelTextStyle ?? this.labelTextStyle,
       errorTextStyle: errorTextStyle ?? this.errorTextStyle,
-      requiredAsteriskStyle: requiredAsteriskStyle ?? this.requiredAsteriskStyle,
+      requiredAsteriskStyle:
+          requiredAsteriskStyle ?? this.requiredAsteriskStyle,
       prefixIconColor: prefixIconColor ?? this.prefixIconColor,
       prefixIconSize: prefixIconSize ?? this.prefixIconSize,
       suffixIconColor: suffixIconColor ?? this.suffixIconColor,
