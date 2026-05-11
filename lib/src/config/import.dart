@@ -3,4 +3,7 @@ export 'package:retcore_field/src/core/theme/retcore_field_theme.dart';
 export 'package:retcore_field/src/core/constants/color_palette.dart';
 export 'package:retcore_field/src/core/constants/size_string.dart';
 export 'package:flutter/services.dart';
+export 'package:retcore_field/src/core/widget/retcore_field_type.dart';
+export 'package:retcore_field/src/core/widget/logic/field_logic.dart';
+export 'package:retcore_field/src/core/widget/components/password_strength_meter.dart';
 export 'package:retcore_field/retcore_field.dart';

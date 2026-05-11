@@ -11,12 +11,24 @@ class RetCoreFieldTheme {
   final TextStyle? labelTextStyle;
   final TextStyle? errorTextStyle;
   final TextStyle? requiredAsteriskStyle;
+  final TextStyle? prefixTextStyle;
+  final TextStyle? suffixTextStyle;
+  final TextStyle? helpTextStyle;
 
   // --- Icon Styling ---
   final Color? prefixIconColor;
   final double? prefixIconSize;
   final Color? suffixIconColor;
   final double? suffixIconSize;
+
+  // --- Clear Button ---
+  final IconData? clearIcon;
+  final Color? clearIconColor;
+
+  // --- Icons (Customizable) ---
+  final IconData? passwordVisibleIcon;
+  final IconData? passwordHiddenIcon;
+  final IconData? datePickerIcon;
 
   // --- Borders ---
   final InputBorder? enabledBorder;
@@ -47,6 +59,10 @@ class RetCoreFieldTheme {
   final EdgeInsets? contentPadding;
   final int? errorMaxLines;
 
+  // --- Password Strength Meter ---
+  final TextStyle? strengthMeterTextStyle;
+  final List<Color>? strengthMeterColors;
+
   /// Creates a theme for RetCoreField.
   const RetCoreFieldTheme({
     this.inputTextStyle,
@@ -54,10 +70,18 @@ class RetCoreFieldTheme {
     this.labelTextStyle,
     this.errorTextStyle,
     this.requiredAsteriskStyle,
+    this.prefixTextStyle,
+    this.suffixTextStyle,
+    this.helpTextStyle,
     this.prefixIconColor,
     this.prefixIconSize,
     this.suffixIconColor,
     this.suffixIconSize,
+    this.clearIcon,
+    this.clearIconColor,
+    this.passwordVisibleIcon,
+    this.passwordHiddenIcon,
+    this.datePickerIcon,
     this.enabledBorder,
     this.focusedBorder,
     this.errorBorder,
@@ -77,6 +101,8 @@ class RetCoreFieldTheme {
     this.isDense = true,
     this.contentPadding,
     this.errorMaxLines,
+    this.strengthMeterTextStyle,
+    this.strengthMeterColors,
   });
 
   /// Creates a copy with the given fields replaced.
@@ -86,10 +112,18 @@ class RetCoreFieldTheme {
     TextStyle? labelTextStyle,
     TextStyle? errorTextStyle,
     TextStyle? requiredAsteriskStyle,
+    TextStyle? prefixTextStyle,
+    TextStyle? suffixTextStyle,
+    TextStyle? helpTextStyle,
     Color? prefixIconColor,
     double? prefixIconSize,
     Color? suffixIconColor,
     double? suffixIconSize,
+    IconData? clearIcon,
+    Color? clearIconColor,
+    IconData? passwordVisibleIcon,
+    IconData? passwordHiddenIcon,
+    IconData? datePickerIcon,
     InputBorder? enabledBorder,
     InputBorder? focusedBorder,
     InputBorder? errorBorder,
@@ -109,6 +143,8 @@ class RetCoreFieldTheme {
     bool? isDense,
     EdgeInsets? contentPadding,
     int? errorMaxLines,
+    TextStyle? strengthMeterTextStyle,
+    List<Color>? strengthMeterColors,
   }) {
     return RetCoreFieldTheme(
       inputTextStyle: inputTextStyle ?? this.inputTextStyle,
@@ -117,10 +153,18 @@ class RetCoreFieldTheme {
       errorTextStyle: errorTextStyle ?? this.errorTextStyle,
       requiredAsteriskStyle:
           requiredAsteriskStyle ?? this.requiredAsteriskStyle,
+      prefixTextStyle: prefixTextStyle ?? this.prefixTextStyle,
+      suffixTextStyle: suffixTextStyle ?? this.suffixTextStyle,
+      helpTextStyle: helpTextStyle ?? this.helpTextStyle,
       prefixIconColor: prefixIconColor ?? this.prefixIconColor,
       prefixIconSize: prefixIconSize ?? this.prefixIconSize,
       suffixIconColor: suffixIconColor ?? this.suffixIconColor,
       suffixIconSize: suffixIconSize ?? this.suffixIconSize,
+      clearIcon: clearIcon ?? this.clearIcon,
+      clearIconColor: clearIconColor ?? this.clearIconColor,
+      passwordVisibleIcon: passwordVisibleIcon ?? this.passwordVisibleIcon,
+      passwordHiddenIcon: passwordHiddenIcon ?? this.passwordHiddenIcon,
+      datePickerIcon: datePickerIcon ?? this.datePickerIcon,
       enabledBorder: enabledBorder ?? this.enabledBorder,
       focusedBorder: focusedBorder ?? this.focusedBorder,
       errorBorder: errorBorder ?? this.errorBorder,
@@ -140,6 +184,9 @@ class RetCoreFieldTheme {
       isDense: isDense ?? this.isDense,
       contentPadding: contentPadding ?? this.contentPadding,
       errorMaxLines: errorMaxLines ?? this.errorMaxLines,
+      strengthMeterTextStyle:
+          strengthMeterTextStyle ?? this.strengthMeterTextStyle,
+      strengthMeterColors: strengthMeterColors ?? this.strengthMeterColors,
     );
   }
 
@@ -174,6 +221,11 @@ class RetCoreFieldTheme {
       prefixIconSize: RetCoreFieldSizes.prefixIconSize,
       suffixIconColor: RetCoreFieldColors.suffixIconColor,
       suffixIconSize: RetCoreFieldSizes.suffixIconSize,
+      clearIcon: Icons.cancel,
+      clearIconColor: Colors.grey.shade400,
+      passwordVisibleIcon: Icons.visibility,
+      passwordHiddenIcon: Icons.visibility_off,
+      datePickerIcon: Icons.calendar_today,
 
       // Borders
       enabledBorder: OutlineInputBorder(
@@ -225,6 +277,15 @@ class RetCoreFieldTheme {
       isDense: true,
       contentPadding: RetCoreFieldSizes.contentPadding,
       errorMaxLines: RetCoreFieldSizes.errorMaxLines,
+      strengthMeterTextStyle: const TextStyle(
+        fontSize: 12.0,
+        fontWeight: FontWeight.bold,
+      ),
+      strengthMeterColors: const [
+        Colors.red, // Weak
+        Colors.orange, // Medium
+        Colors.green, // Strong
+      ],
     );
   }
 }
